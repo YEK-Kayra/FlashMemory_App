@@ -11,6 +11,7 @@
   *					**Will be added FLASH_CheckBusy() function
   *					**Will be added sector & program size enumeration
   *					**Will be added FLASH_AccCntrl() funtion for some parameter
+  *					tomorrow i will start
   ******************************************************************************
   */
 
