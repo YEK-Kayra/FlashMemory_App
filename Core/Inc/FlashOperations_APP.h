@@ -17,6 +17,49 @@
 
 /**Identify Functions Prototype*/
 
+/**
+ * @brief These bits select the program parallelism.
+ */
+typedef enum{
+
+	Program_X8,				/**! Program it with HalfWord */
+	Program_X16,			/**! Program it with Word */
+	Program_X32,			/**! Program it with DoubleWord */
+	Program_X64,			/**! Program it with byte QuadWord*/
+
+}ProgramSize;
+
+
+/**
+ * @brief These bits select the sector to erase.
+ */
+typedef enum{
+
+	Sector_0,				/**! Erase sector 0 from base to end*/
+	Sector_1,
+	Sector_2,
+	Sector_3,
+	Sector_4,
+	Sector_5,
+	Sector_6,
+	Sector_7,
+
+}SectorNumber;
+
+
+
+/**
+ * @brief 	The Flash access control register is used to enable/disable the acceleration features and
+ *			control the Flash memory access time according to CPU frequency
+ */
+void FLASH_AccCntrl();
+/**
+ * @fn     void FLASH_CheckBusy();
+ * @brief This function stops the other flash memory operations when one of them is operating
+ * @param  None
+ * @retval None
+ */
+void FLASH_CheckBusy();
 
 /**
  * @fn     void FLASH_Locker()
@@ -61,7 +104,7 @@ HAL_StatusTypeDef FLASH_Erase(uint8_t NumberOfSector, char EraseMode);
  * 											*"3" 64 Byte Operations
  * @retval HAL Status
  */
-HAL_StatusTypeDef FLASH_Write(uint32_t SectorAddress , uint16_t UserData, uint8_t Psize);
+HAL_StatusTypeDef FLASH_Write(uint32_t SectorAddress , uint16_t UserData, ProgramSize Psize);
 
 
 
@@ -73,6 +116,19 @@ HAL_StatusTypeDef FLASH_Write(uint32_t SectorAddress , uint16_t UserData, uint8_
  * @retval ReceivedData
  */
 uint32_t FLASH_Read(uint32_t Address);
+
+
+typedef struct{
+
+	uint8_t Latency;
+	_Bool DCRST;
+	_Bool ICRST;
+	_Bool DCEN;
+	_Bool ICEN;
+	_Bool PRFTEN;
+
+}FLASH_ACR_TypeDef;
+
 #endif /* INC_FLASHOPERATIONS_APP_H_ */
 
 

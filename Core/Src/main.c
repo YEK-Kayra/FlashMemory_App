@@ -87,6 +87,13 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
+  FLASH_Unlocker(); 		//Unlock the flash memory operation access
+
+  FLASH_Erase(Sector_5, 'm');
+  FLASH_Write(0x08020010 , 97, Program_X8); //Decimal : 97 , Char 'a'
+
+  FLASH_Locker();			//Lock the flash memory operaiton access
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

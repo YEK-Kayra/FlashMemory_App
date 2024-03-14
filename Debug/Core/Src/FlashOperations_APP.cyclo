@@ -1,5 +1,7 @@
-../Core/Src/FlashOperations_APP.c:28:6:FLASH_Unlocker	3
-../Core/Src/FlashOperations_APP.c:53:6:FLASH_Locker	3
-../Core/Src/FlashOperations_APP.c:90:19:FLASH_Erase	5
-../Core/Src/FlashOperations_APP.c:133:19:FLASH_Write	3
-../Core/Src/FlashOperations_APP.c:159:10:FLASH_Read	1
+../Core/Src/FlashOperations_APP.c:28:6:FLASH_AccCntrl	1
+../Core/Src/FlashOperations_APP.c:41:6:FLASH_CheckBusy	2
+../Core/Src/FlashOperations_APP.c:53:6:FLASH_Unlocker	1
+../Core/Src/FlashOperations_APP.c:78:6:FLASH_Locker	1
+../Core/Src/FlashOperations_APP.c:115:19:FLASH_Erase	3
+../Core/Src/FlashOperations_APP.c:162:19:FLASH_Write	1
+../Core/Src/FlashOperations_APP.c:186:10:FLASH_Read	1
