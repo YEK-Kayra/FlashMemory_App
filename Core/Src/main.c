@@ -86,11 +86,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  uint32_t add = 0x08010010;
 
-  FLASH_Unlocker();
-  FLASH_Erase(4, '4');
-  FLASH_Write(0x08020000  , 12);
-  FLASH_Locker();
+  //FLASH_Erase(4 , 'S');
+
+for(uint16_t i=4 ; i<7 ; i++, add+=2){
+	  FLASH_Write(add , i);   				//134283264(base sector_4 address) and +4byte ==> 134283268(sector_4 choosed adress)
+  }
+
 
   /* USER CODE END 2 */
 

@@ -28,6 +28,19 @@
 
 /**Identify Functions Prototype*/
 
+typedef enum{
+
+	Sector_0,
+	Sector_1,
+	Sector_2,
+	Sector_3,
+	Sector_4,
+	Sector_5,
+	Sector_6,
+	Sector_7,
+
+}NumberSector;
+
 
 
 

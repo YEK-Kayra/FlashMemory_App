@@ -67,20 +67,16 @@ void FLASH_Locker(){
 
 }
 
-//FLASH Erase structure object, We will adjust it according to our requirements.
 
 
+HAL_StatusTypeDef FLASH_Erase(uint32_t NumberOfSector, char EraseMode){
 
+	/*Unlock the flash memory*/
+	FLASH_Unlocker();
 
-HAL_StatusTypeDef FLASH_Erase(uint32_t  NumberOfSector, char EraseMode){
+	//FLASH_Erase_Sector(Sector, VoltageRange)
 
-	/*! Wait until BSY bit to be cleared */
-	FLASH_CheckBusy();
-
-	/*! Clear Parallelsize bits of CR Register */
-	FLASH->CR &= ~FLASH_CR_PSize_Clr; //Clear Parallelsize bits of CR Register.
-
-	  /*
+	  	  /*
 		  *	     These bits select the program parallelism.
 		  *		 @param  VoltageRange The device voltage range which defines the erase parallelism.
 		  *
@@ -93,42 +89,38 @@ HAL_StatusTypeDef FLASH_Erase(uint32_t  NumberOfSector, char EraseMode){
 		  *                                  the operation will be done by word (32-bit)
 		  *            @arg FLASH_VOLTAGE_RANGE_4: when the device voltage range is 2.7V to 3.6V + External Vpp,
 		  *                                  the operation will be done by double word (64-bit)
-	   */
-	  FLASH->CR |= FLASH_VOLTAGE_RANGE_3<<8;
+		  */
 
-	 /*! Clear Number of Sectors bits of CR Register */
-	  FLASH->CR &= ~FLASH_CR_SNb_Clr;
+		  /*! Clear Parallelsize bits of CR Register */
+		  	  FLASH->CR &=(~FLASH_CR_PSize_Clr);
+	 	  /*! Config Program Size */
+			  FLASH->CR |= FLASH_VOLTAGE_RANGE_3;
 
-	  switch (EraseMode){
+		  /*! Clear Number of Sectors bits of CR Register */
+		  FLASH->CR &= (~FLASH_CR_SNb_Clr);
 
-	  case 'M' :
-
-	  FLASH->CR |= FLASH_CR_MER | (NumberOfSector << FLASH_CR_SNb_Pos);
-	  FLASH->CR |= FLASH_CR_STRT;
-	  FLASH_CheckBusy();
-	  break;
-
-	  case 'S' :
 	  FLASH->CR |= FLASH_CR_SER | (NumberOfSector << FLASH_CR_SNb_Pos);
 	  FLASH->CR |= FLASH_CR_STRT;
-	  FLASH_CheckBusy();
-	  break;
-	}
-	  return HAL_OK;
+
+  FLASH_Locker();
+
+return HAL_OK;
+
 }
 
 
 HAL_StatusTypeDef FLASH_Write(uint32_t SectorAddress , uint16_t UserData){
 
-
-
+	FLASH_Unlocker();
 	FLASH_CheckBusy();
-	FLASH->CR &= ~FLASH_CR_PSize_Clr; 			//Clear Parallelsize bits of CR Register.
+	FLASH->CR &= (~FLASH_CR_PSize_Clr); 			//Clear Parallelsize bits of CR Register.
 	FLASH->CR |= FLASH_PSIZE_HALF_WORD;
 	FLASH->CR |= FLASH_CR_PG;
-	*(__IO uint16_t*)SectorAddress = UserData;	//Sending data to the Address
-
+	*(__IO uint16_t*)SectorAddress = UserData;		//Sending data to the Address
+	 /* If the program operation is completed, disable the PG Bit */
+	FLASH->CR &= (~FLASH_CR_PG);
 	FLASH_CheckBusy();
+	FLASH_Locker();
 
 	return HAL_OK;
 
