@@ -79,7 +79,7 @@ void FLASH_Unlocker();
  * 									**For "Sector Erase" it's written "S"
  * @retval HAL Status
  */
-HAL_StatusTypeDef FLASH_Erase(uint32_t  NumberOfSector, char EraseMode);
+HAL_StatusTypeDef FLASH_Erase_Sec(uint32_t  NumberOfSector);
 
 
 /**
